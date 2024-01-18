@@ -1,0 +1,56 @@
+Public Class DataGridViewNavigator
+    Private currentRowIndex As Integer = -1
+
+    Public ReadOnly Property CurrentIndex As Integer
+        Get
+            Return currentRowIndex
+        End Get
+    End Property
+
+    Public Sub SelectFirst(ByRef datagrid As DataGridView)
+        datagrid.ClearSelection()
+        If datagrid.RowCount > 0 Then
+            currentRowIndex = 0
+            datagrid.Rows(currentRowIndex).Selected = True
+        End If
+    End Sub
+
+    Public Sub SelectPrevious(ByRef datagrid As DataGridView)
+        datagrid.ClearSelection()
+        Dim totalRows As Integer = datagrid.RowCount
+
+        If totalRows > 0 Then
+            If currentRowIndex > 0 Then
+                currentRowIndex -= 1
+            Else
+                currentRowIndex = totalRows - 1
+            End If
+            datagrid.Rows(currentRowIndex).Selected = True
+        End If
+    End Sub
+
+    Public Sub SelectNext(ByRef datagrid As DataGridView)
+        datagrid.ClearSelection()
+        Dim totalRows As Integer = datagrid.RowCount
+
+        If totalRows > 0 Then
+            If currentRowIndex < totalRows - 1 Then
+                currentRowIndex += 1
+            Else
+                currentRowIndex = 0
+            End If
+            datagrid.Rows(currentRowIndex).Selected = True
+        End If
+    End Sub
+
+    Public Sub SelectLast(ByRef datagrid As DataGridView)
+        datagrid.ClearSelection()
+        Dim totalRows As Integer = datagrid.RowCount
+        If totalRows > 0 Then
+            currentRowIndex = totalRows - 1
+            datagrid.Rows(currentRowIndex).Selected = True
+        End If
+    End Sub
+End Class
+
+
