@@ -1,0 +1,29 @@
+    Public Function FindField(ByVal FileLoc As String, ByVal ID As String, ByVal part As Int16)
+
+        If ID = "" Then
+            Return False
+        End If
+
+
+        Dim searchID As Int16 = CInt(ID)
+        Dim lines As New List(Of String)(File.ReadAllLines(FileLoc))
+
+        For Each line As String In lines
+            ' Split the line into parts using the comma as a delimiter
+            Dim parts As String() = line.Split(","c)
+
+            ' Check if the first part (assuming it's the record ID) matches the ID
+            If parts.Length > 0 AndAlso Val(parts(0)) = searchID Then
+                ' Check if the requested part index is within the bounds of the array
+                If part >= 0 AndAlso part < parts.Length Then
+                    ' Return the specified part of the record
+                    Return parts(part)
+                Else
+                    ' Log an error or handle the out-of-bounds part index appropriately
+                    Return -1
+                End If
+            End If
+        Next
+
+        Return -1
+    End Function
